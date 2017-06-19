@@ -39,13 +39,15 @@ export default class LoginClient extends BaseClient {
      * @param {string} userId - Id of new user
      * @param {string} password - Password for user
      * @param {string} [email=''] - optional email address.
+     * @param {object} [info={} - optional info object.
      * @return {Promise} - resolves if successfully added user, rejects otherwise.
      */
-    register(userId, password, email) {
+    register(userId, password, email, info) {
         let data = {
             userId: userId,
             password: password,
-            email: email || ''
+            email: email || '',
+            info: info || {}
         };
 
         return super.post(['/api', 'register'], data);

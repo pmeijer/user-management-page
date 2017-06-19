@@ -10,8 +10,7 @@
  */
 export function verifyEmail(email) {
     return true;
-    // return email.length >= 3 &&
-    //        /^\S+@\S+\.\S+$/.test(email);
+    return email.length >= 3 && /^\S+@\S+\.\S+$/.test(email);
 }
 
 /**
@@ -34,4 +33,22 @@ export function verifyUserOrOrganizationId(userId) {
     return userId.length >= 3 &&
            /^[A-Za-z0-9_]+$/.test(userId);
     // TODO: share the same reference to the check in webgme
+}
+
+/**
+ * Verifies whether a userName is allowed (check in Register page)
+ * @param {string} userName - userName to be checked
+ * @return {boolean} - T/F valid userName
+ */
+export function verifyUserName(userName) {
+    return userName.length >= 3 && userName.indexOf(' ') > -1;
+}
+
+/**
+ * Verifies whether an Organization field is allowed (check in Register page)
+ * @param {string} orgField - orgField to be checked
+ * @return {boolean} - T/F valid orgField
+ */
+export function verifyOrganizationField(orgField) {
+    return typeof orgField === 'string' && orgField.length >= 1;
 }

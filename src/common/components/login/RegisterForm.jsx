@@ -9,7 +9,8 @@ import { Button } from 'react-bootstrap';
 import { Link } from 'react-router';
 // Self-defined
 import LoginField from '../content/widgets/LoginField';
-import { verifyEmail, verifyPassword, verifyUserOrOrganizationId } from '../../../client/utils/loginUtils';
+import { verifyEmail, verifyPassword, verifyUserOrOrganizationId, verifyUserName, verifyOrganizationField}
+    from '../../../client/utils/loginUtils';
 // Style
 import { RegisterForm as STYLE } from '../../../client/style';
 
@@ -18,92 +19,70 @@ export default class RegisterForm extends Component {
         super(props);
         this.state = {
             creating: false,
-            // agreeToTerms: false,
-            confirmPassword: '',
+            agreeToTerms: false,
             email: '',
             // State so a different message for duplicate userId can be shown
             invalidMessage: {
-                confirmPassword: "Passwords must match",
                 email: "Invalid email",
-                password: "Password must be at least 3 characters long and must not be " +
-                          "a poor password such as 'password'",
                 userId: "Username must only contain letters, numbers, and the underscore" +
-                        " and must be at least 3 characters long"
+                        " and must be at least 3 characters long",
+                userName: "Provide a first and a surname separated by space",
+                orgName: "Field is missing",
+                orgAddr: "Field is missing",
+                orgCountry: "Field is missing"
             },
-            password: '',
             userId: '',
+            userName: '',
+            orgName: '',
+            orgAddr: '',
+            orgCountry: '',
             validCredentials: {
-                // agreeToTerms: true,
-                confirmPassword: true,
+                agreeToTerms: true,
                 email: true,
-                password: true,
-                userId: true
+                userId: true,
+                userName: true,
+                orgName: true,
+                orgAddr: true,
+                orgCountry: true
             }
         };
 
         // Event handlers
         this.checkAllFields = this.checkAllFields.bind(this);
-        this.checkConfirmPassword = this.checkConfirmPassword.bind(this);
         this.checkEmail = this.checkEmail.bind(this);
-        this.checkPassword = this.checkPassword.bind(this);
         this.checkUserId = this.checkUserId.bind(this);
+        this.checkUserName = this.checkUserName.bind(this);
+        this.checkOrgName = this.checkOrgName.bind(this);
+        this.checkOrgAddr = this.checkOrgAddr.bind(this);
+        this.checkOrgCountry = this.checkOrgCountry.bind(this);
+
         this.onAgreeToTermsChange = this.onAgreeToTermsChange.bind(this);
-        this.onConfirmPasswordChange = this.onConfirmPasswordChange.bind(this);
         this.onEmailChange = this.onEmailChange.bind(this);
-        this.onPasswordChange = this.onPasswordChange.bind(this);
         this.onRegister = this.onRegister.bind(this);
         this.atFailedNewUser = this.atFailedNewUser.bind(this);
         this.onUserIdChange = this.onUserIdChange.bind(this);
+        this.onUserNameChange = this.onUserNameChange.bind(this);
+        this.onOrgNameChange = this.onOrgNameChange.bind(this);
+        this.onOrgAddrChange = this.onOrgAddrChange.bind(this);
+        this.onOrgCountryChange = this.onOrgCountryChange.bind(this);
     }
 
     componentDidMount() {
 
     }
 
+    // Check fields
     checkAllFields() {
         this.setState({
             validCredentials: {
-                // agreeToTerms: this.state.agreeToTerms,
-                confirmPassword: this.state.password === this.state.confirmPassword,
+                agreeToTerms: this.state.agreeToTerms,
                 email: verifyEmail(this.state.email),
-                password: verifyPassword(this.state.password),
-                userId: verifyUserOrOrganizationId(this.state.userId)
-            }
-        });
-    }
+                userId: verifyUserOrOrganizationId(this.state.userId),
 
-    checkConfirmPassword() {
-        this.setState({
-            validCredentials: {
-                // agreeToTerms: this.state.agreeToTerms,
-                confirmPassword: this.state.password === this.state.confirmPassword,
-                email: this.state.validCredentials.email,
-                password: this.state.validCredentials.password,
-                userId: this.state.validCredentials.userId
-            }
-        });
-    }
-
-    checkEmail() {
-        this.setState({
-            validCredentials: {
-                // agreeToTerms: this.state.validCredentials.agreeToTerms,
-                confirmPassword: this.state.validCredentials.confirmPassword,
-                email: verifyEmail(this.state.email),
-                password: this.state.validCredentials.password,
-                userId: this.state.validCredentials.userId
-            }
-        });
-    }
-
-    checkPassword() {
-        this.setState({
-            validCredentials: {
-                // agreeToTerms: this.state.validCredentials.agreeToTerms,
-                confirmPassword: this.state.validCredentials.confirmPassword,
-                email: this.state.validCredentials.email,
-                password: verifyPassword(this.state.password),
-                userId: this.state.validCredentials.userId
+                userName: verifyUserName(this.state.userName),
+                orgName: verifyOrganizationField(this.state.orgName),
+                orgAddr: verifyOrganizationField(this.state.orgAddr),
+                orgCountry: verifyOrganizationField(this.state.orgCountry)
             }
         });
     }
@@ -111,11 +90,89 @@ export default class RegisterForm extends Component {
     checkUserId() {
         this.setState({
             validCredentials: {
-                // agreeToTerms: this.state.validCredentials.agreeToTerms,
-                confirmPassword: this.state.validCredentials.confirmPassword,
+                agreeToTerms: this.state.validCredentials.agreeToTerms,
                 email: this.state.validCredentials.email,
-                password: this.state.validCredentials.password,
-                userId: verifyUserOrOrganizationId(this.state.userId)
+                userId: verifyUserOrOrganizationId(this.state.userId),
+
+                userName: this.state.validCredentials.userName,
+                orgName: this.state.validCredentials.orgName,
+                orgAddr: this.state.validCredentials.orgAddr,
+                orgCountry: this.state.validCredentials.orgCountry
+            }
+        });
+    }
+
+    checkUserName() {
+        this.setState({
+            validCredentials: {
+                agreeToTerms: this.state.validCredentials.agreeToTerms,
+                email: this.state.validCredentials.email,
+                userId: this.state.validCredentials.userId,
+
+                userName: verifyUserName(this.state.userName),
+                orgName: this.state.validCredentials.orgName,
+                orgAddr: this.state.validCredentials.orgAddr,
+                orgCountry: this.state.validCredentials.orgCountry
+            }
+        });
+    }
+
+    checkEmail() {
+        this.setState({
+            validCredentials: {
+                agreeToTerms: this.state.validCredentials.agreeToTerms,
+                email: verifyEmail(this.state.email),
+                userId: this.state.validCredentials.userId,
+
+                userName: this.state.validCredentials.userName,
+                orgName: this.state.validCredentials.orgName,
+                orgAddr: this.state.validCredentials.orgAddr,
+                orgCountry: this.state.validCredentials.orgCountry
+            }
+        });
+    }
+
+    checkOrgName() {
+        this.setState({
+            validCredentials: {
+                agreeToTerms: this.state.validCredentials.agreeToTerms,
+                email: this.state.validCredentials.email,
+                userId: this.state.validCredentials.userId,
+
+                userName: this.state.validCredentials.userName,
+                orgName: verifyOrganizationField(this.state.orgName),
+                orgAddr: this.state.validCredentials.orgAddr,
+                orgCountry: this.state.validCredentials.orgCountry
+            }
+        });
+    }
+
+    checkOrgAddr() {
+        this.setState({
+            validCredentials: {
+                agreeToTerms: this.state.validCredentials.agreeToTerms,
+                email: this.state.validCredentials.email,
+                userId: this.state.validCredentials.userId,
+
+                userName: this.state.validCredentials.userName,
+                orgName: this.state.validCredentials.orgName,
+                orgAddr: verifyOrganizationField(this.state.orgAddr),
+                orgCountry: this.state.validCredentials.orgCountry
+            }
+        });
+    }
+
+    checkOrgCountry() {
+        this.setState({
+            validCredentials: {
+                agreeToTerms: this.state.validCredentials.agreeToTerms,
+                email: this.state.validCredentials.email,
+                userId: this.state.validCredentials.userId,
+
+                userName: this.state.validCredentials.userName,
+                orgName: this.state.validCredentials.orgName,
+                orgAddr: this.state.validCredentials.orgAddr,
+                orgCountry: verifyOrganizationField(this.state.orgCountry)
             }
         });
     }
@@ -126,21 +183,39 @@ export default class RegisterForm extends Component {
         });
     }
 
-    onConfirmPasswordChange(event) {
-        this.setState({
-            confirmPassword: event.target.value
-        });
-    }
-
     onEmailChange(event) {
         this.setState({
             email: event.target.value
         });
     }
 
-    onPasswordChange(event) {
+    onUserIdChange(event) {
         this.setState({
-            password: event.target.value
+            userId: event.target.value
+        });
+    }
+
+    onUserNameChange(event) {
+        this.setState({
+            userName: event.target.value
+        });
+    }
+
+    onOrgNameChange(event) {
+        this.setState({
+            orgName: event.target.value
+        });
+    }
+
+    onOrgAddrChange(event) {
+        this.setState({
+            orgAddr: event.target.value
+        });
+    }
+
+    onOrgCountryChange(event) {
+        this.setState({
+            orgCountry: event.target.value
         });
     }
 
@@ -170,10 +245,8 @@ export default class RegisterForm extends Component {
         } else {
             // Reset fields
             this.setState({
-                // agreeToTerms: false,
-                confirmPassword: '',
+                agreeToTerms: false,
                 email: this.state.validCredentials.email ? this.state.email : '',
-                password: '',
                 userId: this.state.validCredentials.userId ? this.state.userId : ''
             });
         }
@@ -188,28 +261,17 @@ export default class RegisterForm extends Component {
             // Immutability add-ons aren't worth installing for this one case
             this.setState({
                 invalidMessage: {
-                    confirmPassword: "Passwords must match",
                     email: "Invalid email",
-                    password: "Password must be at least 3 characters long and must not be " +
-                    "a poor password such as 'password'",
                     userId: "Username already taken"
                 },
                 validCredentials: {
-                    confirmPassword: this.state.password === this.state.confirmPassword,
                     email: this.state.validCredentials.email,
-                    password: this.state.validCredentials.password,
                     userId: false
                 }
             });
         } else {
             console.error('???');
         }
-    }
-
-    onUserIdChange(event) {
-        this.setState({
-            userId: event.target.value
-        });
     }
 
     render() {
@@ -228,8 +290,18 @@ export default class RegisterForm extends Component {
 
                 {/* userId */}
                 <LoginField autoFocus={true}
-                            hint="User ID"
+                            hint="Name"
                             iconClass="glyphicon glyphicon-user"
+                            disabled = {!this.props.allowUserCreation}
+                            invalidMessage={this.state.invalidMessage.userName}
+                            onBlur={this.checkUserName}
+                            onInputChange={this.onUserNameChange}
+                            valid={this.state.validCredentials.userName}
+                            value={this.state.userName}/>
+
+                <LoginField autoFocus={true}
+                            hint="User ID"
+                            iconClass="glyphicon glyphicon-certificate"
                             disabled = {!this.props.allowUserCreation}
                             invalidMessage={this.state.invalidMessage.userId}
                             onBlur={this.checkUserId}
@@ -247,51 +319,47 @@ export default class RegisterForm extends Component {
                             valid={this.state.validCredentials.email}
                             value={this.state.email}/>
 
-                {/* password */}
-                <LoginField hint="Password"
-                            iconClass="glyphicon glyphicon-lock"
+                <LoginField hint="Organization Name"
+                            iconClass="glyphicon glyphicon-briefcase"
                             disabled = {!this.props.allowUserCreation}
-                            invalidMessage={this.state.invalidMessage.password}
-                            onBlur={this.checkPassword}
-                            onInputChange={this.onPasswordChange}
-                            textType="password"
-                            valid={this.state.validCredentials.password}
-                            value={this.state.password}/>
+                            invalidMessage={this.state.invalidMessage.orgName}
+                            onBlur={this.checkOrgName}
+                            onInputChange={this.onOrgNameChange}
+                            valid={this.state.validCredentials.orgName}
+                            value={this.state.orgName}/>
 
-                {/* confirm password */}
-                <LoginField hint="Confirm password"
-                            iconClass="glyphicon glyphicon-log-in"
+                <LoginField hint="Organization Address"
+                            iconClass="glyphicon glyphicon-bookmark"
                             disabled = {!this.props.allowUserCreation}
-                            invalidMessage={this.state.invalidMessage.confirmPassword}
-                            onBlur={this.checkConfirmPassword}
-                            onEnter={this.onRegister}
-                            onInputChange={this.onConfirmPasswordChange}
-                            textType="password"
-                            valid={this.state.validCredentials.confirmPassword}
-                            value={this.state.confirmPassword}/>
+                            invalidMessage={this.state.invalidMessage.orgAddr}
+                            onBlur={this.checkOrgAddr}
+                            onInputChange={this.onOrgAddrChange}
+                            valid={this.state.validCredentials.orgAddr}
+                            value={this.state.orgAddr}/>
+
+                <LoginField hint="Organization Country"
+                            iconClass="glyphicon glyphicon-globe"
+                            disabled = {!this.props.allowUserCreation}
+                            invalidMessage={this.state.invalidMessage.orgCountry}
+                            onBlur={this.checkOrgCountry}
+                            onInputChange={this.onOrgCountryChange}
+                            valid={this.state.validCredentials.orgCountry}
+                            value={this.state.orgCountry}/>
 
                 {/* Remember Check / Sign in attempt */}
                 <div className="row">
-
-                    {/*
                     {!this.state.validCredentials.agreeToTerms ? // eslint-disable-line no-negated-condition
                         <div className="row">
                             <div className="col-sm-12" style={{textAlign: "left"}}>
                                 <span style={{color: "red", textAlign: "left"}}>Please agree to the terms</span>
                             </div>
                         </div> : null}
-                     */}
 
                     <div className="col-sm-8" style={STYLE.linkToLogin.column}>
 
-                        {/*
-                        <Checkbox checked={this.state.agreeToTerms}
-                                  onChange={this.onAgreeToTermsChange}
-                                  validationState={this.state.agreeToTerms ? "success" : "warning"}>
+                        <input type="checkbox" checked={this.state.agreeToTerms} onChange={this.onAgreeToTermsChange}/>
                             I agree to the terms
-                        </Checkbox>
-                        */}
-
+                        <br/>
                         <Link to={this.props.backLinkData.path}>
                             {this.props.backLinkData.title}
                         </Link>
@@ -317,7 +385,7 @@ export default class RegisterForm extends Component {
 }
 
 RegisterForm.propTypes = {
-    allowUserCreation: PropTypes.bool,
+    allowUserCreation: PropTypes.string,
     title: PropTypes.string,
     backLinkData: PropTypes.shape({
         title: React.PropTypes.string.isRequired,

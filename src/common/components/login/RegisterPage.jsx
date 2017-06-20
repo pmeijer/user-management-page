@@ -30,14 +30,10 @@ export default class RegisterPage extends Component {
             });
     }
 
-    registerUser(userId, password, email) {
-        return this.props.loginClient.register(userId, password, email)
+    registerUser(userId, password, email, info) {
+        return this.props.loginClient.register(userId, password, email, info)
             .then(() => {
-                this.props.loginClient.login(userId, password)
-                    .then(() => {
-                        browserHistory.push('/');
-                        window.location.reload();
-                    });
+                browserHistory.push(`${this.props.basePath}requested`);
             })
             .catch(err => {
                 return err.status || 500;

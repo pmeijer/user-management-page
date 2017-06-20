@@ -27,9 +27,9 @@ export default class RegisterForm extends Component {
                 userId: "Username must only contain letters, numbers, and the underscore" +
                         " and must be at least 3 characters long",
                 userName: "Provide a first and a surname separated by space",
-                orgName: "Field is missing",
-                orgAddr: "Field is missing",
-                orgCountry: "Field is missing"
+                orgName: "Provide an organization",
+                orgAddr: "Provide the address of your organization",
+                orgCountry: "Provide the country of your organization"
             },
             userId: '',
             userName: '',
@@ -178,8 +178,12 @@ export default class RegisterForm extends Component {
     }
 
     onAgreeToTermsChange() {
+        var prev = this.state.agreeToTerms;
         this.setState({
-            agreeToTerms: !this.state.agreeToTerms
+            agreeToTerms: !prev,
+            validCredentials: {
+                agreeToTerms: !prev
+            }
         });
     }
 
@@ -230,12 +234,17 @@ export default class RegisterForm extends Component {
             }
         });
 
-        if (allValid) {
+        if (allValid && this.state.agreeToTerms) {
             this.setState({
                 creating: true
             });
 
-            this.props.onNewUser(this.state.userId, this.state.password, this.state.email)
+            this.props.onNewUser(this.state.userId, this.state.password, this.state.email, {
+                userName: this.state.userName,
+                orgName: this.state.orgName,
+                orgAddr: this.state.orgAddr,
+                orgCountry: this.state.orgCountry
+            })
                 .then((status) => {
                     if (typeof status === 'number') {
                         this.atFailedNewUser(status);
@@ -247,7 +256,11 @@ export default class RegisterForm extends Component {
             this.setState({
                 agreeToTerms: false,
                 email: this.state.validCredentials.email ? this.state.email : '',
-                userId: this.state.validCredentials.userId ? this.state.userId : ''
+                userId: this.state.validCredentials.userId ? this.state.userId : '',
+                userName: this.state.validCredentials.userName ? this.state.userName : '',
+                orgName: this.state.validCredentials.orgName ? this.state.orgName : '',
+                orgAddr: this.state.validCredentials.orgAddr ? this.state.orgAddr : '',
+                orgCountry: this.state.validCredentials.orgCountry ? this.state.orgCountry : ''
             });
         }
     }
@@ -261,16 +274,16 @@ export default class RegisterForm extends Component {
             // Immutability add-ons aren't worth installing for this one case
             this.setState({
                 invalidMessage: {
-                    email: "Invalid email",
-                    userId: "Username already taken"
+                    email: "Email or user ID already taken",
+                    userId: "Email or user ID already taken"
                 },
                 validCredentials: {
-                    email: this.state.validCredentials.email,
+                    email: false,
                     userId: false
                 }
             });
         } else {
-            console.error('???');
+            console.error(status);
         }
     }
 
@@ -282,7 +295,7 @@ export default class RegisterForm extends Component {
             }, true),
             titleMessage = this.props.allowUserCreation ? this.props.title : 'User Creation Not Permitted';
 
-        return <div className="register-box-body">
+        return <div className="register-box-body" style={STYLE.fieldBox}>
             {titleMessage ?
                 <p className="login-box-msg">{titleMessage}</p> : null}
 
@@ -372,7 +385,7 @@ export default class RegisterForm extends Component {
                                     disabled={!validAndNotEmpty}
                                     onClick={this.onRegister}
                                     style={STYLE.registerButton}>
-                                Submit
+                                Request Account
                             </Button> : null }
                     </div>
 

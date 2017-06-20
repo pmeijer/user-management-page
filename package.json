@@ -72,6 +72,6 @@
     "webpack": "^1.13.0",
     "http-server": "^0.8.5",
     "mocha": "^2.4.5",
-    "webgme": "webgme/webgme#master"
+    "webgme": "webgme/webgme#configurable-usermanagement-page"
   }
 }

@@ -51,7 +51,7 @@ function initialize(middlewareOpts) {
         serveFile(onlyFileExtension, res);
     });
 
-    router.get(['/login', '/register'], function(req, res) {
+    router.get(['/login', '/register', '/requested'], function(req, res) {
         logger.debug('Login path taken:', req.originalUrl);
 
         fs.readFile(path.join(DIST_DIR, 'login.html'), 'utf8', function(err, indexTemplate) {

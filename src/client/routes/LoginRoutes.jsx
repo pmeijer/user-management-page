@@ -12,6 +12,7 @@ import { Route } from 'react-router';
 import App from '../../common/components/login/app';
 import LoginForm from '../../common/components/login/LoginForm';
 import RegisterPage from '../../common/components/login/RegisterPage';
+import AccountRequested from '../../common/components/login/AccountRequested';
 
 const basePath = document.getElementById('baseUrlHolder').getAttribute('data');
 
@@ -22,6 +23,8 @@ export default (
         <Route path="login" component={LoginForm}/>
 
         <Route path="register" component={RegisterPage}/>
+
+        <Route path="requested" component={AccountRequested}/>
 
     </Route>
 );

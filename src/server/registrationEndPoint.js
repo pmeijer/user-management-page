@@ -13,6 +13,7 @@ module.exports = function getRegistrationEndPoint(middlewareOpts) {
     var gmeConfig = middlewareOpts.gmeConfig,
         gmeAuth = middlewareOpts.gmeAuth;
 
+
     return function (req, res, next) {
         var receivedData = req.body;
 
@@ -39,6 +40,8 @@ module.exports = function getRegistrationEndPoint(middlewareOpts) {
                         throw new Error('Email [' + receivedData.email + '] is already used!');
                     }
                 }
+
+                console.log('New user request!', JSON.stringify(receivedData, null, 2));
 
                 res.sendStatus(200);
             })

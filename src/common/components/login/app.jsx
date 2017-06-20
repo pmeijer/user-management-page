@@ -6,6 +6,7 @@
 import React, { Component } from 'react';
 // Self-defined
 import LoginClient from '../../../client/rest_client/loginClient';
+import TermsAndConditions from './TermsAndConditions';
 
 export default class App extends Component {
 
@@ -24,13 +25,12 @@ export default class App extends Component {
             }));
 
         return (
-            <div className="login-box">
+            <div className="login-box" style={{width: "800px"}}>
                 <div className="login-logo">
                     <b>GME</b>Profile
                 </div>
-
                 {FormWithBasePath}
-
+                <TermsAndConditions/>
             </div>
         );
     }

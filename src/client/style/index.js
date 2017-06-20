@@ -162,6 +162,11 @@ export const LoginForm = {
             color: "red",
             textAlign: "center"
         }
+    },
+    fieldBox: {
+        width: "360px",
+        float: "left",
+        marginRight: "20px"
     }
 };
 
@@ -259,6 +264,11 @@ export const RegisterForm = {
     registerButton: {
         float: "right",
         marginTop: "5px"
+    },
+    fieldBox: {
+        width: "360px",
+        float: "left",
+        marginRight: "20px"
     }
 };
 
@@ -309,3 +319,4 @@ export const UserMenu = {
         height: "145px"
     }
 };
+

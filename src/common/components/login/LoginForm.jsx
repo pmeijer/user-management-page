@@ -124,7 +124,7 @@ export default class LoginForm extends Component {
     }
 
     render() {
-        return <div className="login-box-body">
+        return <div className="login-box-body" style={STYLE.fieldBox}>
             <p className="login-box-msg">
                 Sign in to start your session
             </p>

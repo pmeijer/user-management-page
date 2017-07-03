@@ -247,7 +247,17 @@ export default class RegisterForm extends Component {
         this.setState({
             agreeToTerms: !prev,
             validCredentials: {
-                agreeToTerms: !prev
+                agreeToTerms: !prev,
+                email: this.state.validCredentials.email,
+                userId: this.state.validCredentials.userId,
+
+                confirmPassword: this.state.validCredentials.confirmPassword,
+                password: this.state.validCredentials.password,
+
+                userName: this.state.validCredentials.userName,
+                orgName: this.state.validCredentials.orgName,
+                orgAddr: this.state.validCredentials.orgAddr,
+                orgCountry: this.state.validCredentials.orgCountry
             }
         });
     }

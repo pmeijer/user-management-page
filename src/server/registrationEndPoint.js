@@ -4,8 +4,6 @@
  * @author pmeijer / https://github.com/pmeijer
  */
 
-var Q = require('q');
-
 'use strict';
 module.exports = function getRegistrationEndPoint(middlewareOpts) {
     var gmeConfig = middlewareOpts.gmeConfig,

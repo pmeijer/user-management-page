@@ -9,7 +9,7 @@ import { Button } from 'react-bootstrap';
 import { Link } from 'react-router';
 // Self-defined
 import LoginField from '../content/widgets/LoginField';
-import { verifyEmail, verifyPassword, verifyUserOrOrganizationId, verifyUserName, verifyOrganizationField}
+import { verifyEmail, verifyPassword, verifyUserOrOrganizationId, verifyUserName, verifyOrganizationField, verifyPassword}
     from '../../../client/utils/loginUtils';
 // Style
 import { RegisterForm as STYLE } from '../../../client/style';
@@ -25,6 +25,8 @@ export default class RegisterForm extends Component {
             // State so a different message for duplicate userId can be shown
             invalidMessage: {
                 confirmPassword: "Passwords must match",
+                password: "Password must be at least 3 characters long and must not be " +
+                "a poor password such as 'password'",
                 email: "Invalid email",
                 userId: "Username must only contain letters, numbers, and the underscore" +
                         " and must be at least 3 characters long",
@@ -41,6 +43,7 @@ export default class RegisterForm extends Component {
             validCredentials: {
                 agreeToTerms: true,
                 confirmPassword: true,
+                password: true,
                 email: true,
                 userId: true,
                 userName: true,
@@ -52,6 +55,7 @@ export default class RegisterForm extends Component {
 
         // Event handlers
         this.checkAllFields = this.checkAllFields.bind(this);
+        this.checkPassword = this.checkPassword.bind(this);
         this.checkConfirmPassword = this.checkConfirmPassword.bind(this);
         this.checkEmail = this.checkEmail.bind(this);
         this.checkUserId = this.checkUserId.bind(this);
@@ -101,7 +105,7 @@ export default class RegisterForm extends Component {
                 email: this.state.validCredentials.email,
                 userId: verifyUserOrOrganizationId(this.state.userId),
 
-                confirmPassword: this.state.password === this.state.confirmPassword,
+                confirmPassword: this.state.validCredentials.confirmPassword,
                 password: this.state.validCredentials.password,
 
                 userName: this.state.validCredentials.userName,
@@ -130,7 +134,7 @@ export default class RegisterForm extends Component {
         });
     }
 
-    checkUserName() {
+    checkConfirmPassword() {
         this.setState({
             validCredentials: {
                 agreeToTerms: this.state.validCredentials.agreeToTerms,
@@ -138,6 +142,24 @@ export default class RegisterForm extends Component {
                 userId: this.state.validCredentials.userId,
 
                 confirmPassword: this.state.password === this.state.confirmPassword,
+                password: this.state.validCredentials.password,
+
+                userName: this.state.validCredentials.userName,
+                orgName: this.state.validCredentials.orgName,
+                orgAddr: this.state.validCredentials.orgAddr,
+                orgCountry: this.state.validCredentials.orgCountry
+            }
+        });
+    }
+
+    checkUserName() {
+        this.setState({
+            validCredentials: {
+                agreeToTerms: this.state.validCredentials.agreeToTerms,
+                email: this.state.validCredentials.email,
+                userId: this.state.validCredentials.userId,
+
+                confirmPassword: this.state.validCredentials.confirmPassword,
                 password: this.state.validCredentials.password,
 
                 userName: verifyUserName(this.state.userName),
@@ -155,7 +177,7 @@ export default class RegisterForm extends Component {
                 email: verifyEmail(this.state.email),
                 userId: this.state.validCredentials.userId,
 
-                confirmPassword: this.state.password === this.state.confirmPassword,
+                confirmPassword: this.state.validCredentials.confirmPassword,
                 password: this.state.validCredentials.password,
 
                 userName: this.state.validCredentials.userName,
@@ -173,7 +195,7 @@ export default class RegisterForm extends Component {
                 email: this.state.validCredentials.email,
                 userId: this.state.validCredentials.userId,
 
-                confirmPassword: this.state.password === this.state.confirmPassword,
+                confirmPassword: this.state.validCredentials.confirmPassword,
                 password: this.state.validCredentials.password,
 
                 userName: this.state.validCredentials.userName,
@@ -191,7 +213,7 @@ export default class RegisterForm extends Component {
                 email: this.state.validCredentials.email,
                 userId: this.state.validCredentials.userId,
 
-                confirmPassword: this.state.password === this.state.confirmPassword,
+                confirmPassword: this.state.validCredentials.confirmPassword,
                 password: this.state.validCredentials.password,
 
                 userName: this.state.validCredentials.userName,
@@ -209,7 +231,7 @@ export default class RegisterForm extends Component {
                 email: this.state.validCredentials.email,
                 userId: this.state.validCredentials.userId,
 
-                confirmPassword: this.state.password === this.state.confirmPassword,
+                confirmPassword: this.state.validCredentials.confirmPassword,
                 password: this.state.validCredentials.password,
 
                 userName: this.state.validCredentials.userName,
@@ -227,6 +249,18 @@ export default class RegisterForm extends Component {
             validCredentials: {
                 agreeToTerms: !prev
             }
+        });
+    }
+
+    onPasswordChange(event) {
+        this.setState({
+            password: event.target.value
+        });
+    }
+
+    onConfirmPasswordChange(event) {
+        this.setState({
+            confirmPassword: event.target.value
         });
     }
 
@@ -298,6 +332,8 @@ export default class RegisterForm extends Component {
             // Reset fields
             this.setState({
                 agreeToTerms: false,
+                password: '',
+                confirmPassword: '',
                 email: this.state.validCredentials.email ? this.state.email : '',
                 userId: this.state.validCredentials.userId ? this.state.userId : '',
                 userName: this.state.validCredentials.userName ? this.state.userName : '',
@@ -344,7 +380,7 @@ export default class RegisterForm extends Component {
 
             <form>
 
-                {/* userId */}
+                {/* userName/Id */}
                 <LoginField autoFocus={true}
                             hint="Name"
                             iconClass="glyphicon glyphicon-user"
@@ -364,6 +400,29 @@ export default class RegisterForm extends Component {
                             onInputChange={this.onUserIdChange}
                             valid={this.state.validCredentials.userId}
                             value={this.state.userId}/>
+
+                {/* password */}
+                <LoginField hint="Password"
+                            iconClass="glyphicon glyphicon-lock"
+                            disabled = {!this.props.allowUserCreation}
+                            invalidMessage={this.state.invalidMessage.password}
+                            onBlur={this.checkPassword}
+                            onInputChange={this.onPasswordChange}
+                            textType="password"
+                            valid={this.state.validCredentials.password}
+                            value={this.state.password}/>
+
+                {/* confirm password */}
+                <LoginField hint="Confirm password"
+                            iconClass="glyphicon glyphicon-log-in"
+                            disabled = {!this.props.allowUserCreation}
+                            invalidMessage={this.state.invalidMessage.confirmPassword}
+                            onBlur={this.checkConfirmPassword}
+                            onEnter={this.onRegister}
+                            onInputChange={this.onConfirmPasswordChange}
+                            textType="password"
+                            valid={this.state.validCredentials.confirmPassword}
+                            value={this.state.confirmPassword}/>
 
                 {/* email */}
                 <LoginField hint="Email"

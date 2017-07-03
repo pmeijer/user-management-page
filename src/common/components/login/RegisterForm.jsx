@@ -20,9 +20,11 @@ export default class RegisterForm extends Component {
         this.state = {
             creating: false,
             agreeToTerms: false,
+            confirmPassword: '',
             email: '',
             // State so a different message for duplicate userId can be shown
             invalidMessage: {
+                confirmPassword: "Passwords must match",
                 email: "Invalid email",
                 userId: "Username must only contain letters, numbers, and the underscore" +
                         " and must be at least 3 characters long",
@@ -38,6 +40,7 @@ export default class RegisterForm extends Component {
             orgCountry: '',
             validCredentials: {
                 agreeToTerms: true,
+                confirmPassword: true,
                 email: true,
                 userId: true,
                 userName: true,
@@ -49,6 +52,7 @@ export default class RegisterForm extends Component {
 
         // Event handlers
         this.checkAllFields = this.checkAllFields.bind(this);
+        this.checkConfirmPassword = this.checkConfirmPassword.bind(this);
         this.checkEmail = this.checkEmail.bind(this);
         this.checkUserId = this.checkUserId.bind(this);
         this.checkUserName = this.checkUserName.bind(this);
@@ -57,6 +61,8 @@ export default class RegisterForm extends Component {
         this.checkOrgCountry = this.checkOrgCountry.bind(this);
 
         this.onAgreeToTermsChange = this.onAgreeToTermsChange.bind(this);
+        this.onPasswordChange = this.onPasswordChange.bind(this);
+        this.onConfirmPasswordChange = this.onConfirmPasswordChange.bind(this);
         this.onEmailChange = this.onEmailChange.bind(this);
         this.onRegister = this.onRegister.bind(this);
         this.atFailedNewUser = this.atFailedNewUser.bind(this);
@@ -76,9 +82,10 @@ export default class RegisterForm extends Component {
         this.setState({
             validCredentials: {
                 agreeToTerms: this.state.agreeToTerms,
+                confirmPassword: this.state.password === this.state.confirmPassword,
                 email: verifyEmail(this.state.email),
                 userId: verifyUserOrOrganizationId(this.state.userId),
-
+                password: verifyPassword(this.state.password),
                 userName: verifyUserName(this.state.userName),
                 orgName: verifyOrganizationField(this.state.orgName),
                 orgAddr: verifyOrganizationField(this.state.orgAddr),
@@ -93,6 +100,27 @@ export default class RegisterForm extends Component {
                 agreeToTerms: this.state.validCredentials.agreeToTerms,
                 email: this.state.validCredentials.email,
                 userId: verifyUserOrOrganizationId(this.state.userId),
+
+                confirmPassword: this.state.password === this.state.confirmPassword,
+                password: this.state.validCredentials.password,
+
+                userName: this.state.validCredentials.userName,
+                orgName: this.state.validCredentials.orgName,
+                orgAddr: this.state.validCredentials.orgAddr,
+                orgCountry: this.state.validCredentials.orgCountry
+            }
+        });
+    }
+
+    checkPassword() {
+        this.setState({
+            validCredentials: {
+                agreeToTerms: this.state.validCredentials.agreeToTerms,
+                email: this.state.validCredentials.email,
+                userId: this.state.validCredentials.userId,
+
+                confirmPassword: this.state.validCredentials.confirmPassword,
+                password: verifyPassword(this.state.password),
 
                 userName: this.state.validCredentials.userName,
                 orgName: this.state.validCredentials.orgName,
@@ -109,6 +137,9 @@ export default class RegisterForm extends Component {
                 email: this.state.validCredentials.email,
                 userId: this.state.validCredentials.userId,
 
+                confirmPassword: this.state.password === this.state.confirmPassword,
+                password: this.state.validCredentials.password,
+
                 userName: verifyUserName(this.state.userName),
                 orgName: this.state.validCredentials.orgName,
                 orgAddr: this.state.validCredentials.orgAddr,
@@ -123,6 +154,9 @@ export default class RegisterForm extends Component {
                 agreeToTerms: this.state.validCredentials.agreeToTerms,
                 email: verifyEmail(this.state.email),
                 userId: this.state.validCredentials.userId,
+
+                confirmPassword: this.state.password === this.state.confirmPassword,
+                password: this.state.validCredentials.password,
 
                 userName: this.state.validCredentials.userName,
                 orgName: this.state.validCredentials.orgName,
@@ -139,6 +173,9 @@ export default class RegisterForm extends Component {
                 email: this.state.validCredentials.email,
                 userId: this.state.validCredentials.userId,
 
+                confirmPassword: this.state.password === this.state.confirmPassword,
+                password: this.state.validCredentials.password,
+
                 userName: this.state.validCredentials.userName,
                 orgName: verifyOrganizationField(this.state.orgName),
                 orgAddr: this.state.validCredentials.orgAddr,
@@ -154,6 +191,9 @@ export default class RegisterForm extends Component {
                 email: this.state.validCredentials.email,
                 userId: this.state.validCredentials.userId,
 
+                confirmPassword: this.state.password === this.state.confirmPassword,
+                password: this.state.validCredentials.password,
+
                 userName: this.state.validCredentials.userName,
                 orgName: this.state.validCredentials.orgName,
                 orgAddr: verifyOrganizationField(this.state.orgAddr),
@@ -168,6 +208,9 @@ export default class RegisterForm extends Component {
                 agreeToTerms: this.state.validCredentials.agreeToTerms,
                 email: this.state.validCredentials.email,
                 userId: this.state.validCredentials.userId,
+
+                confirmPassword: this.state.password === this.state.confirmPassword,
+                password: this.state.validCredentials.password,
 
                 userName: this.state.validCredentials.userName,
                 orgName: this.state.validCredentials.orgName,

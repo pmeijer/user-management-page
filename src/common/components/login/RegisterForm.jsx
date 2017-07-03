@@ -9,7 +9,7 @@ import { Button } from 'react-bootstrap';
 import { Link } from 'react-router';
 // Self-defined
 import LoginField from '../content/widgets/LoginField';
-import { verifyEmail, verifyPassword, verifyUserOrOrganizationId, verifyUserName, verifyOrganizationField, verifyPassword}
+import { verifyEmail, verifyPassword, verifyUserOrOrganizationId, verifyUserName, verifyOrganizationField}
     from '../../../client/utils/loginUtils';
 // Style
 import { RegisterForm as STYLE } from '../../../client/style';

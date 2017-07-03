@@ -1,10 +1,7 @@
 {
-  "name": "registration-user-management-page",
-  "version": "0.2.4",
-  "engines": {
-    "node": ">=6.0.0"
-  },
-  "description": "Based on webgme/user-management-page but with nodemailer registration.",
+  "name": "webgme-user-management-page",
+  "version": "0.3.0",
+  "description": "User management page for webgme",
   "main": "./src/server/usermanagement.js",
   "scripts": {
     "eslint": "node ./node_modules/eslint/bin/eslint.js ./src/*",
@@ -18,7 +15,24 @@
     "type": "git",
     "url": "git+https://github.com/webgme/user-management-page.git"
   },
-  "author": "kecso <tkecskes@isis.vanderbilt.edu>",
+  "author": {
+    "name": "WebGME Development Team",
+    "url": "https://webgme.org"
+  },
+  "contributors": [
+    {
+      "name": "Patrick Kerry Pei",
+      "url": "https://github.com/patrickkerrypei"
+    },
+    {
+      "name": "Patrik Meijer",
+      "url": "https://github.com/pmeijer"
+    },
+    {
+      "name": "Tamas Kecskes",
+      "url": "https://github.com/kecso"
+    }
+  ],
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/webgme/user-management-page/issues"
@@ -27,10 +41,7 @@
   "dependencies": {
     "body-parser": "1.15.2",
     "ejs": "^2.4.2",
-    "express": "4.14.0",
-    "mongodb": "^2.2.29",
-    "nodemailer": "^4.0.1",
-    "q": "^1.5.0"
+    "express": "4.14.0"
   },
   "devDependencies": {
     "admin-lte": "^2.3.3",
@@ -72,6 +83,6 @@
     "webpack": "^1.13.0",
     "http-server": "^0.8.5",
     "mocha": "^2.4.5",
-    "webgme": "webgme/webgme#configurable-usermanagement-page"
+    "webgme": "webgme/webgme"
   }
 }

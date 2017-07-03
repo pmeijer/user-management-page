@@ -14,6 +14,8 @@ config.authentication.allowGuests = false;
 config.authentication.allowUserRegistration = path.join(__dirname, '../src/server/registrationEndPoint');
 config.authentication.userManagementPage = path.join(__dirname, '../src/server/usermanagement');
 
+config.authentication.userManagementPage = path.join(__dirname, '../src/server/usermanagement');
+
 config.rest.components = {
     'usermanagement': path.resolve('./src/server/usermanagement')
 };

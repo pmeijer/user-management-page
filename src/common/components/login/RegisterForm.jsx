@@ -363,12 +363,19 @@ export default class RegisterForm extends Component {
             // Immutability add-ons aren't worth installing for this one case
             this.setState({
                 invalidMessage: {
-                    email: "Email or user ID already taken",
-                    userId: "Email or user ID already taken"
+                    email: "Email and/or user ID already registered",
+                    userId: "Email and/or user ID already registered"
                 },
                 validCredentials: {
                     email: false,
-                    userId: false
+                    userId: false,
+                    agreeToTerms: this.state.validCredentials.agreeToTerms,
+                    userName: this.state.validCredentials.userName,
+                    orgName: this.state.validCredentials.orgName,
+                    orgAddr: this.state.validCredentials.orgAddr,
+                    orgCountry: this.state.validCredentials.orgCountry,
+                    confirmPassword: this.state.validCredentials.confirmPassword,
+                    password: this.state.validCredentials.password
                 }
             });
         } else {

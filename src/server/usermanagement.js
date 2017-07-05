@@ -15,13 +15,13 @@ var express = require('express'),
     gmeAuth,
     logger;
 
-function atNewUser(auth, userId) {
-    auth.addUserToOrganization(userId, DEFAULT_ORG)
+function atNewUser(auth, data) {
+    auth.addUserToOrganization(data.userId, DEFAULT_ORG)
         .then(function () {
-            logger.debug('Added', userId, 'to', DEFAULT_ORG);
+            logger.debug('Added', data.userId, 'to', DEFAULT_ORG);
         })
         .catch(function (err) {
-            logger.error('Failed to add user', userId, 'to default organization', DEFAULT_ORG, err);
+            logger.error('Failed to add user', data.userId, 'to default organization', DEFAULT_ORG, err);
         });
 }
 

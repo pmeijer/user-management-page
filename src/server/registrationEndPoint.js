@@ -26,7 +26,12 @@ module.exports = function getRegistrationEndPoint(middlewareOpts) {
 
         // TODO: Add regex for userId and check other data too.
         if (typeof receivedData.userId !== 'string' || receivedData.userId.length === 0 ||
-            typeof receivedData.email !== 'string' || receivedData.email.length === 0) {
+            typeof receivedData.email !== 'string' || receivedData.email.length === 0 ||
+            typeof receivedData.info !== 'object' || receivedData.info === null ||
+            typeof receivedData.info.userName !== 'string' || receivedData.info.userName.length === 0 ||
+            typeof receivedData.info.orgName !== 'string' || receivedData.info.orgName.length === 0 ||
+            typeof receivedData.info.orgAddr !== 'string' || receivedData.info.orgAddr.length === 0 ||
+            typeof receivedData.info.orgCountry !== 'string' || receivedData.info.userName.orgCountry === 0) {
 
             logger.warn('Provided data was invalid!');
             res.sendStatus(400);
@@ -42,10 +47,10 @@ module.exports = function getRegistrationEndPoint(middlewareOpts) {
                 return gmeAuth.addUser(receivedData.userId, receivedData.email, receivedData.password, true, {
                     disabled: true,
                     data: {
-                        userName: receivedData.data.userName,
-                        orgName: receivedData.data.orgName,
-                        orgAddr: receivedData.data.orgAddr,
-                        orgCountry: receivedData.data.orgCountry
+                        userName: receivedData.info.userName,
+                        orgName: receivedData.info.orgName,
+                        orgAddr: receivedData.info.orgAddr,
+                        orgCountry: receivedData.info.orgCountry
                     }
                 });
             })

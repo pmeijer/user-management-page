@@ -11,7 +11,19 @@ var express = require('express'),
     router = express.Router(),
     bodyParser = require('body-parser'),
     DIST_DIR = path.join(__dirname, '..', '..', 'dist'),
+    DEFAULT_ORG = 'SEAML',
+    gmeAuth,
     logger;
+
+function atNewUser(auth, userId) {
+    auth.addUserToOrganization(userId, DEFAULT_ORG)
+        .then(function () {
+            logger.debug('Added', userId, 'to', DEFAULT_ORG);
+        })
+        .catch(function (err) {
+            logger.error('Failed to add user', userId, 'to default organization', DEFAULT_ORG, err);
+        });
+}
 
 function serveFile(fileName, res) {
     var options = {
@@ -92,6 +104,10 @@ function initialize(middlewareOpts) {
         });
     });
 
+    // Add newly created users to default organization
+    gmeAuth = middlewareOpts.gmeAuth;
+    gmeAuth.addEventListener(middlewareOpts.gmeAuth.USER_CREATED, atNewUser);
+
     logger.debug('ready');
 }
 
@@ -99,9 +115,23 @@ module.exports = {
     initialize: initialize,
     router: router,
     start: function(callback) {
-        callback(null);
+        gmeAuth.addOrganization(DEFAULT_ORG)
+            .then(function () {
+                logger.info('Created default organization', DEFAULT_ORG, 'at start up.');
+                callback();
+            })
+            .catch(function (err) {
+                if (err.message.indexOf('already exists') > -1) {
+                    logger.info('Default organization', DEFAULT_ORG, 'existed at start up.');
+                    callback();
+                } else {
+                    callback(err);
+                }
+            })
+            .done();
     },
     stop: function(callback) {
+        gmeAuth.removeEventListener(gmeAuth.USER_CREATED, atNewUser);
         callback(null);
     }
 };

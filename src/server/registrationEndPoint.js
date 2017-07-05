@@ -42,10 +42,10 @@ module.exports = function getRegistrationEndPoint(middlewareOpts) {
                 return gmeAuth.addUser(receivedData.userId, receivedData.email, receivedData.password, true, {
                     disabled: true,
                     data: {
-                        userName: receivedData.userName,
-                        orgName: receivedData.orgName,
-                        orgAddr: receivedData.orgAddr,
-                        orgCountry: receivedData.orgCountry
+                        userName: receivedData.data.userName,
+                        orgName: receivedData.data.orgName,
+                        orgAddr: receivedData.data.orgAddr,
+                        orgCountry: receivedData.data.orgCountry
                     }
                 });
             })

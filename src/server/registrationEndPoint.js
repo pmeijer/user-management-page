@@ -22,7 +22,7 @@ module.exports = function getRegistrationEndPoint(middlewareOpts) {
             return;
         }
 
-        logger.info('New user request!', logData);
+        logger.info('New user requested:', logData);
 
         // TODO: Add regex for userId and check other data too.
         if (typeof receivedData.userId !== 'string' || receivedData.userId.length < 3 || /^[A-Za-z0-9_]+$/.test(receivedData.userId) === false ||

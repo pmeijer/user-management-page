@@ -483,14 +483,15 @@ export default class RegisterForm extends Component {
                     {!this.state.validCredentials.agreeToTerms ? // eslint-disable-line no-negated-condition
                         <div className="row">
                             <div className="col-sm-12" style={{textAlign: "left"}}>
-                                <span style={{color: "red", textAlign: "left"}}>Please agree to the terms</span>
+                                <span style={{color: "red", textAlign: "left"}}>Please confirm that you've read the disclaimer</span>
                             </div>
                         </div> : null}
 
                     <div className="col-sm-8" style={STYLE.linkToLogin.column}>
 
                         <input type="checkbox" checked={this.state.agreeToTerms} onChange={this.onAgreeToTermsChange}/>
-                            I agree to the terms
+                        &nbsp; I have read the disclaimer
+                        <br/>
                         <br/>
                         <Link to={this.props.backLinkData.path}>
                             {this.props.backLinkData.title}

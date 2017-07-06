@@ -106,7 +106,7 @@ function initialize(middlewareOpts) {
 
     // Add newly created users to default organization
     gmeAuth = middlewareOpts.gmeAuth;
-    gmeAuth.addEventListener(middlewareOpts.gmeAuth.USER_CREATED, atNewUser);
+    gmeAuth.addEventListener(gmeAuth.CONSTANTS.USER_CREATED, atNewUser);
 
     logger.debug('ready');
 }
@@ -131,7 +131,7 @@ module.exports = {
             .done();
     },
     stop: function(callback) {
-        gmeAuth.removeEventListener(gmeAuth.USER_CREATED, atNewUser);
+        gmeAuth.removeEventListener(gmeAuth.CONSTANTS.USER_CREATED, atNewUser);
         callback(null);
     }
 };

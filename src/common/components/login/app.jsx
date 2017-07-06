@@ -27,7 +27,7 @@ export default class App extends Component {
         return (
             <div className="login-box" style={{width: "800px"}}>
                 <div className="login-logo">
-                    <b>GME</b>Profile
+                    Authentication
                 </div>
                 {FormWithBasePath}
                 <TermsAndConditions/>

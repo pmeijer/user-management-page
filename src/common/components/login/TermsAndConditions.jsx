@@ -25,18 +25,13 @@ export default class TermsAndConditions extends Component {
     render() {
         return <div className="register-box-body" style={{float: 'left', width: '360px'}}>
             <p className="login-box-msg">
-                Terms & Conditions
+                <b>Disclaimer</b>
             </p>
             <div className="terms-and-conditions-text">
-                Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium,
-                totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta
-                sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia
-                consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui
-                dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora
-                incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum
-                exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem
-                vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui
-                dolorem eum fugiat quo voluptas nulla pariatur?
+                The contents of the <i>Model Based Assurance</i> website have been prepared for the <i>Radiation Effects and
+                Reliability Assurance</i> research community for informational purposes that are not export controlled.
+                Your privacy and security are important to us; please <b>do not</b> upload any data that is <b>controlled
+                unclassified information, export controlled, or considered to be intellectual property</b>.
             </div>
         </div>;
     }

@@ -97,7 +97,7 @@ export default class LoginForm extends Component {
                         nextLocation = window.decodeURIComponent(redirectPath);
                     }
 
-                    if (isSmallDevice) {
+                    if (isSmallDevice || this.state.userId === 'admin') {
                         // On small device go to user-management right away.
                         nextLocation = this.props.basePath;
                     }

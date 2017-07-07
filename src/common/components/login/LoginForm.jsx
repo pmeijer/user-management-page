@@ -6,13 +6,13 @@
  */
 
 // Libraries
-import React, { Component, PropTypes } from 'react';
-import { Button, ButtonGroup } from 'react-bootstrap';
-import { browserHistory, Link } from 'react-router';
+import React, {Component, PropTypes} from 'react';
+import {Button, ButtonGroup} from 'react-bootstrap';
+import {browserHistory, Link} from 'react-router';
 // Self-defined
 import LoginField from '../content/widgets/LoginField';
 // Style
-import { LoginForm as STYLE } from '../../../client/style';
+import {LoginForm as STYLE} from '../../../client/style';
 
 export default class LoginForm extends Component {
     constructor(props) {
@@ -88,13 +88,18 @@ export default class LoginForm extends Component {
                 if (/2\d\d/.test(res.statusCode)) {
 
                     let redirectPath = /redirect=(\S+)/.exec(window.location.href) ?
-                                       /redirect=(\S+)/.exec(window.location.href)[1] : '',
+                            /redirect=(\S+)/.exec(window.location.href)[1] : '',
                         nextLocation = '';
 
                     if (redirectPath === '') {
-                        nextLocation = this.props.basePath;
+                        nextLocation = '/';
                     } else {
                         nextLocation = window.decodeURIComponent(redirectPath);
+                    }
+
+                    if (isSmallDevice) {
+                        // On small device go to user-management right away.
+                        nextLocation = this.props.basePath;
                     }
 
                     browserHistory.push(nextLocation);
@@ -161,22 +166,22 @@ export default class LoginForm extends Component {
                     <div className="col-sm-5" style={{paddingTop: "10px"}}>
 
                         {/*
-                        <Checkbox checked={this.state.rememberMe}
-                                  onChange={this.onRememberMeChange}
-                                  style={{marginBottom: 0}}
-                                  validationState={this.state.rememberMe ? "success" : "warning"}>
-                            Remember Me
-                        </Checkbox>
-                        */}
+                         <Checkbox checked={this.state.rememberMe}
+                         onChange={this.onRememberMeChange}
+                         style={{marginBottom: 0}}
+                         validationState={this.state.rememberMe ? "success" : "warning"}>
+                         Remember Me
+                         </Checkbox>
+                         */}
 
                         {/* TODO: implement system for forgot password
-                        <OverlayTrigger trigger="click"
-                                        placement="bottom"
-                                        overlay={<Popover title="" id="randomId">
-                                <strong>Coming soon</strong>
-                                </Popover>}>
-                            <Link to={`${this.props.basePath}login`}>I forgot my password</Link>
-                        </OverlayTrigger>
+                         <OverlayTrigger trigger="click"
+                         placement="bottom"
+                         overlay={<Popover title="" id="randomId">
+                         <strong>Coming soon</strong>
+                         </Popover>}>
+                         <Link to={`${this.props.basePath}login`}>I forgot my password</Link>
+                         </OverlayTrigger>
 
                          <br/>*/}
 

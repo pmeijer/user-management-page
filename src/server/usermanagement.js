@@ -11,7 +11,7 @@ var express = require('express'),
     router = express.Router(),
     bodyParser = require('body-parser'),
     DIST_DIR = path.join(__dirname, '..', '..', 'dist'),
-    DEFAULT_ORG = 'SEAML',
+    DEFAULT_ORG = 'MBAC',
     gmeAuth,
     logger;
 

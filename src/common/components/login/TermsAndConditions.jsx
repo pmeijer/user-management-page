@@ -33,9 +33,12 @@ export default class TermsAndConditions extends Component {
                 informational purposes that are not export controlled. Your privacy and security are important to us; please
                 <b>do not</b> upload any data that is <b>controlled unclassified information, export controlled, or
                 considered to be intellectual property</b>.
-                <br> Note: The content of this website  and the SEAM tool set are
+                </p>
+                <p>
+                Note: The content of this website  and the SEAM tool set are
                 considered "Beta Software".
-                <br>
+                </p>
+                <p>
                 Vanderbilt University disclaims all warranties with regard to this software, including all implied
                 warranties of merchantability and fitness.  In no event shall Vanderbilt University be liable for any special,
                 indirect or consequential damages or any damages whatsoever resulting from loss of use, data or profits,

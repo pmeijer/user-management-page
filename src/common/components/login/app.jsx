@@ -13,6 +13,10 @@ export default class App extends Component {
     constructor(props) {
         super(props);
         this.loginClient = new LoginClient();
+
+        if (window.top === window && typeof window.sessionStorage.getItem('originalReferrer') !== 'string') {
+            window.sessionStorage.setItem('originalReferrer', window.document.referrer);
+        }
     }
 
     render() {

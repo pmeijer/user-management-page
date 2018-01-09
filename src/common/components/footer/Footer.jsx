@@ -18,7 +18,7 @@ export default class Footer extends Component {
         return (
             <footer className="main-footer" style={STYLE.mainFooter}>
 
-                <strong style={STYLE.footerLeft}>&copy; 2017
+                <strong style={STYLE.footerLeft}>&copy; 2018
                     <a href="https://www.vanderbilt.edu" target="_blank">
                         &nbsp;Vanderbilt University
                     </a>
@@ -31,7 +31,7 @@ export default class Footer extends Component {
                 </strong>
 
                 <span className="pull-right hidden-xs" style={STYLE.footerRight}>
-                    <a href="https://github.com/webgme/user-management-page/releases" target="_blank">v0.3.0</a>
+                    <a href="https://github.com/webgme/user-management-page/releases" target="_blank">v0.3.2</a>
                 </span>
 
             </footer>
